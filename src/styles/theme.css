@@ -13,3 +13,14 @@
 		'PingFang SC', -apple-system, system-ui, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif, BlinkMacSystemFont, 'Helvetica Neue',
 		'Hiragino Sans GB', 'Microsoft YaHei', Arial;
 }
+
+@media (prefers-color-scheme: dark) {
+	@theme {
+		--color-primary: #f1f5f9;
+		--color-secondary: #cbd5e1;
+		--color-bg: #0b0f14;
+		--color-border: #1f2937;
+		--color-card: #0f172a99;
+		--color-article: #0b1220cc;
+	}
+}

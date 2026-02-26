@@ -23,6 +23,7 @@ import { Check } from 'lucide-react'
 import { CategoryModal } from './components/category-modal'
 
 type DisplayMode = 'day' | 'week' | 'month' | 'year' | 'category'
+const PAGE_SIZE = 20
 
 export default function BlogPage() {
 	const { items, loading } = useBlogIndex()
@@ -34,6 +35,7 @@ export default function BlogPage() {
 	const enableCategories = siteContent.enableCategories ?? false
 
 	const keyInputRef = useRef<HTMLInputElement>(null)
+	const loadMoreRef = useRef<HTMLDivElement>(null)
 	const [editMode, setEditMode] = useState(false)
 	const [editableItems, setEditableItems] = useState<BlogIndexItem[]>([])
 	const [selectedSlugs, setSelectedSlugs] = useState<Set<string>>(new Set())
@@ -42,6 +44,7 @@ export default function BlogPage() {
 	const [categoryModalOpen, setCategoryModalOpen] = useState(false)
 	const [categoryList, setCategoryList] = useState<string[]>([])
 	const [newCategory, setNewCategory] = useState('')
+	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
 	useEffect(() => {
 		if (!editMode) {
@@ -53,7 +56,38 @@ export default function BlogPage() {
 		setCategoryList(categoriesFromServer || [])
 	}, [categoriesFromServer])
 
-	const displayItems = editMode ? editableItems : items
+	useEffect(() => {
+		setVisibleCount(PAGE_SIZE)
+	}, [items])
+
+	const loadMore = useCallback(() => {
+		setVisibleCount(prev => Math.min(prev + PAGE_SIZE, items.length))
+	}, [items.length])
+
+	const hasMore = !editMode && items.length > visibleCount
+
+	useEffect(() => {
+		if (!hasMore) return
+		const target = loadMoreRef.current
+		if (!target) return
+
+		const observer = new IntersectionObserver(
+			entries => {
+				if (entries.some(entry => entry.isIntersecting)) {
+					loadMore()
+				}
+			},
+			{ rootMargin: '200px 0px' }
+		)
+
+		observer.observe(target)
+		return () => observer.disconnect()
+	}, [hasMore, loadMore])
+
+	const displayItems = useMemo(() => {
+		if (editMode) return editableItems
+		return items.slice(0, visibleCount)
+	}, [editMode, editableItems, items, visibleCount])
 
 	const { groupedItems, groupKeys, getGroupLabel } = useMemo(() => {
 		const sorted = [...displayItems].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -445,17 +479,14 @@ export default function BlogPage() {
 				})}
 				{items.length > 0 && (
 					<div className='text-center'>
-						<motion.a
-							initial={{ opacity: 0, scale: 0.6 }}
-							animate={{ opacity: 1, scale: 1 }}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-							href='https://juejin.cn/user/2427311675422382/posts'
-							target='_blank'
-							className='card text-secondary static inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs'>
-							<JuejinSVG className='h-4 w-4' />
-							更多
-						</motion.a>
+						{hasMore && (
+							<div
+								ref={loadMoreRef}
+								className='text-secondary inline-flex items-center gap-2 text-xs'>
+								<span className='h-1.5 w-1.5 rounded-full bg-current'></span>
+								下拉加载更多
+							</div>
+						)}
 					</div>
 				)}
 			</div>
