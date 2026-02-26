@@ -1,18 +1,18 @@
 {
 	"meta": {
-		"title": "YYsuni",
-		"description": "YYsuni 的个人博客，记录前端开发、探索、笔记。前端 UI 更新代码仓库。",
-		"username": "Suni"
+		"title": "mafanfan",
+		"description": "mafanfan 的个人博客，记录前端开发、探索、笔记。前端 UI 更新代码仓库。",
+		"username": "mafanfan"
 	},
 	"theme": {
 		"colorBrand": "#de4331",
 		"colorPrimary": "#4E3F42",
-		"colorSecondary": "#7b888e",
+		"colorSecondary": "#acadae",
 		"colorBrandSecondary": "#FCC841",
-		"colorBg": "#eeeeee",
-		"colorBorder": "#ffffff",
-		"colorCard": "#ffffff66",
-		"colorArticle": "#ffffffcc"
+		"colorBg": "#0a051f",
+		"colorBorder": "#8a8a8a5e",
+		"colorCard": "#ffffff0e",
+		"colorArticle": "#6f6f6f33"
 	},
 	"backgroundColors": [
 		"#FCC841",
@@ -30,9 +30,13 @@
 		{
 			"id": "a46372ff45bc5524",
 			"url": "/images/art/a46372ff45bc5524.jpg"
+		},
+		{
+			"id": "4c419c266e9e2f8e",
+			"url": "/images/art/4c419c266e9e2f8e.jpg"
 		}
 	],
-	"currentArtImageId": "a46372ff45bc5524",
+	"currentArtImageId": "4c419c266e9e2f8e",
 	"backgroundImages": [
 		{
 			"id": "",
@@ -44,21 +48,21 @@
 		{
 			"id": "github",
 			"type": "github",
-			"value": "https://github.com/yysuni",
+			"value": "https://github.com/chesongsong",
 			"label": "Github",
 			"order": 3
 		},
 		{
 			"id": "juejin",
 			"type": "juejin",
-			"value": "https://juejin.cn/user/2427311675422382",
+			"value": "https://juejin.cn/user/4239336857152989",
 			"label": "稀土掘金",
 			"order": 2
 		},
 		{
 			"id": "email",
 			"type": "email",
-			"value": "yysuni1001@gmail.com",
+			"value": "508734226@qq.com",
 			"label": "",
 			"order": 1
 		}
